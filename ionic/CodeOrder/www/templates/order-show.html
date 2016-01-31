@@ -1,0 +1,35 @@
+<ion-header-bar class="bar-positive">
+
+    <a
+            class="button button-icon ion-android-arrow-back"
+            ng-href="#/t/orders">
+    </a>
+    <h1 class="title"> Order {{order.id}} - {{order.status}}</h1>
+</ion-header-bar>
+
+<ion-content>
+    <div class="list">
+        <div class="item item-divider">ID</div>
+        <a class="item" href="#">{{order.id}}</a>
+
+        <div class="item item-divider">Client</div>
+        <a class="item" href="#">{{order._embedded.client.name}}</a>
+
+        <div class="item item-divider">Total</div>
+        <a class="item" href="#">{{order.total}}</a>
+
+        <div class="item item-divider">Itens</div>
+        <div class="row header">
+            <div class="col">Produto</div>
+            <div class="col">Quantidade</div>
+            <div class="col">Preço</div>
+            <div class="col">Total</div>
+        </div>
+        <div class="row responsive-sm" ng-repeat="o in order.items">
+            <div class="col">{{o.product_name}}</div>
+            <div class="col">{{o.quantity}}</div>
+            <div class="col">{{o.price}}</div>
+            <div class="col">{{o.total}}</div>
+        </div>
+    </div>
+</ion-content>

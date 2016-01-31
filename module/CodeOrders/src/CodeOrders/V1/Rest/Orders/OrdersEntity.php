@@ -4,6 +4,7 @@ namespace CodeOrders\V1\Rest\Orders;
 class OrdersEntity
 {
     protected $id;
+    protected $client;
     protected $client_id;
     protected $user_id;
     protected $ptype_id;
@@ -11,11 +12,6 @@ class OrdersEntity
     protected $status;
     protected $created_at;
     protected $items;
-
-    public function __construct()
-    {
-        $this->items = [];
-    }
 
     /**
      * @return mixed
@@ -32,6 +28,24 @@ class OrdersEntity
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param mixed $client
+     * @return OrdersEntity
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
         return $this;
     }
 
@@ -144,7 +158,7 @@ class OrdersEntity
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getItems()
     {
@@ -152,12 +166,12 @@ class OrdersEntity
     }
 
     /**
-     * @param $item
-     * @return $this
+     * @param mixed $items
+     * @return OrdersEntity
      */
-    public function addItems($item)
+    public function addItem($items)
     {
-        $this->items[] = $item;
+        $this->items[] = $items;
         return $this;
     }
 

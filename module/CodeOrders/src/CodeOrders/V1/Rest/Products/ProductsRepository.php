@@ -27,12 +27,19 @@ class ProductsRepository
     }
 
     public function find($id){
-        $result = $this->tableGateway->select(['id' => (int)$id])->current();
-        return $result;
+        $resultSet = $this->tableGateway->select(['id' => (int)$id]);
+        if($resultSet->count() == 1) return $resultSet->current();
+        return false;
     }
 
-    public function insert($productEntity){
+    public function create($productEntity){
         return $this->tableGateway->insert((array) $productEntity);
+    }
+
+    public function patch($id, $data)
+    {
+        $this->tableGateway->update((array)$data, ["id" => (int)$id]);
+        return $this->find($id);
     }
 
     public function update($id, $data){
@@ -43,6 +50,11 @@ class ProductsRepository
     public function delete($id){
         $this->tableGateway->delete(['id' => (int)$id]);
         return true;
+    }
+
+    public function findByUsername($username)
+    {
+        return $this->tableGateway->select(['username' => $username])->current();
     }
 
 }

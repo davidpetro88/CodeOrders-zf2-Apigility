@@ -8,6 +8,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Uri\UriFactory;
 
 class Module
 {
@@ -16,6 +17,7 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        UriFactory::registerScheme('chrome-extension','Zend\Uri\Uri');
     }
 
     public function getConfig()

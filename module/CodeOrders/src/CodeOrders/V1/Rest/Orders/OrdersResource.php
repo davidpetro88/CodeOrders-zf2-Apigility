@@ -7,6 +7,22 @@ use ZF\Rest\AbstractResourceListener;
 class OrdersResource extends AbstractResourceListener
 {
     /**
+     * @var OrdersRepository $repository
+     */
+    private $repository;
+    /**
+     * @var OrderService $service
+     */
+    private $service;
+    /**
+     * Constructor of class
+     */
+    public function __construct(OrdersRepository $repository, OrdersService $service){
+        $this->repository = $repository;
+        $this->service = $service;
+    }
+
+    /**
      * Create a resource
      *
      * @param  mixed $data
@@ -14,7 +30,11 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $result =  $this->service->create($data);
+        if($result == 'error'){
+            return new ApiProblem(405, 'Error processing order');
+        }
+        return $result;
     }
 
     /**
@@ -47,7 +67,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->repository->find($id);
     }
 
     /**
@@ -58,7 +78,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $this->repository->fecthAll();
     }
 
     /**

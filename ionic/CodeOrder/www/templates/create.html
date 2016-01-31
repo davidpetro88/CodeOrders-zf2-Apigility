@@ -1,0 +1,58 @@
+<ion-header-bar class="bar-positive">
+    <h1 class="title">Novo Pedidos</h1>
+    <button class="button" ng-click="addItem()">Adicionar Item</button>
+</ion-header-bar>
+
+<ion-content class="padding has-subheader">
+
+    <div class="list">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Cliente</span>
+            <select class="form-control" ng-model="order.client_id" ng-options="o.id as o.name for o in clients">
+                <option value="">-Selecione o cliente-</option>
+            </select>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Forma de pagamento</span>
+            <select class="form-control" ng-model="order.ptype_id" ng-options="o.id as o.name for o in ptypes">
+                <option value="">-Selecione a forma de PGTO-</option>
+            </select>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Status</span>
+            <select class="form-control" ng-model="order.status" ng-options="o as o for o in statusList">
+                <option value="">-Selecione o Status-</option>
+            </select>
+        </label>
+
+        <div class="row  header">
+            <div class="col">Produto</div>
+            <div class="col">Quantidade</div>
+            <div class="col">Preço</div>
+            <div class="col">Total</div>
+        </div>
+        <div class="row response-sm" ng-repeat="o in order.item">
+            <div class="col">
+                <select class="form-control" ng-model="order.item[$index].product_id"
+                                             ng-options="o.id as o.name for o in products"
+                                             ng-change="setPrice($index)">Selecione o Produto</select>
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Quantidade" ng-model="order.item[$index].quantity" ng-blur="calculateTotalRow($index)">
+            </div>
+            <div class="col">
+                {{ order.item[$index].price }}<!-- <input type="text" placeholder="Preço" ng-model="order.item[$index].price"> -->
+            </div>
+            <div class="col">
+                R$ {{ order.item[$index].total }}
+            </div>
+
+
+        </div>
+
+        <button class="button button-block" ng-click="save()">Confirmar Pedido</button>
+
+    </div>
+</ion-content>
